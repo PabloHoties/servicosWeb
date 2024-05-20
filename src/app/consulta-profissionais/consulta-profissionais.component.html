@@ -1,0 +1,47 @@
+<!-- mensagem de retorno da API -->
+<div *ngIf="mensagemSucesso != ''" class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>{{mensagemSucesso}}</strong>
+    <button (click)="mensagemSucesso = ''" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div *ngIf="mensagemErro != ''" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{ mensagemErro }}</strong>
+    <button (click)="mensagemErro = ''" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome do profissional</th>
+                <th>Email</th>
+                <th class="text-center">CPF</th>
+                <th class="text-center">Telefone</th>
+                <th class="text-center">Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of profissionais">
+                <td>{{p.nome}}</td>
+                <td>{{p.email}}</td>
+                <td class="text-center">{{p.cpf}}</td>
+                <td class="text-center">{{p.telefone}}</td>
+                <td class="text-center">
+                    <button class="btn btn-outline-primary btn-sm">
+                        Editar
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm ms-2" (click)="onDelete(p.idProfissional)">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    Quantidade de clientes: {{profissionais.length}}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

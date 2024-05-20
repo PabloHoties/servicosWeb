@@ -1,0 +1,36 @@
+<div class="m-2">
+    <div *ngIf="mensagemErro != ''" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ mensagemErro }}</strong>
+        <button (click)="mensagemErro = ''" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label>Email de acesso:</label>
+                                <input type="email" class="form-control" placeholder="Digite seu email aqui"
+                                    formControlName="email">
+                                <div class="text-danger" *ngIf="f['email'].touched && f['email'].invalid">Por favor,
+                                    informe um endereço de email válido.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Senha de acesso:</label>
+                                <input type="password" class="form-control" placeholder="Digite sua senha aqui"
+                                    formControlName="senha">
+                                <div class="text-danger" *ngIf="f['senha'].touched && f['senha'].invalid">Por favor,
+                                    informe uma senha com pelo menos 8 caracteres.</div>
+                            </div>
+                            <div class="d-grid">
+                                <input type="submit" class="btn btn-primary" value="Acessar Sistema"
+                                    [disabled]="form.invalid">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
