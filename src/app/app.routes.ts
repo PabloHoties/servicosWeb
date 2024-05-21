@@ -3,6 +3,7 @@ import { ConsultaProfissionaisComponent } from './consulta-profissionais/consult
 import { AutenticarUsuarioComponent } from './autenticar-usuario/autenticar-usuario.component';
 import { CriarUsuarioComponent } from './criar-usuario/criar-usuario.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CadastroProfissionaisComponent } from './cadastro-profissionais/cadastro-profissionais.component';
 
 export const routes: Routes = [
     {
@@ -19,6 +20,11 @@ export const routes: Routes = [
     {
         path: 'profissionais-consulta',
         component: ConsultaProfissionaisComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'profissionais-cadastro',
+        component: CadastroProfissionaisComponent,
         canActivate: [AuthGuard]
     }
 ];
