@@ -1,0 +1,51 @@
+<!-- mensagem de retorno da API -->
+<div *ngIf="mensagemSucesso != ''" class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>{{mensagemSucesso}}</strong>
+    <button (click)="mensagemSucesso = ''" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div *ngIf="mensagemErro != ''" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{ mensagemErro }}</strong>
+    <button (click)="mensagemErro = ''" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome do serviço</th>
+                <th>Descrição</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Profissional</th>
+                <th class="text-center">Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let s of servicos">
+                <td>{{s.nome}}</td>
+                <td>{{s.descricao}}</td>
+                <td class="text-center">{{s.valor | currency:'BRL' }}</td>
+                <td class="text-center">
+                    <button class="btn btn-outline-primary btn-sm">
+                        Exibir
+                    </button>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-outline-primary btn-sm">
+                        Editar
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm ms-2" (click)="onDelete(s.idServico)">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    Quantidade de clientes: {{servicos.length}}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
