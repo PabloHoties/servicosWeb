@@ -27,7 +27,7 @@
                 <td class="text-center">{{p.cpf}}</td>
                 <td class="text-center">{{p.telefone}}</td>
                 <td class="text-center">
-                    <button class="btn btn-outline-primary btn-sm">
+                    <button class="btn btn-outline-primary btn-sm" (click)="onEdit(p.idProfissional)">
                         Editar
                     </button>
                     <button class="btn btn-outline-danger btn-sm ms-2" (click)="onDelete(p.idProfissional)">

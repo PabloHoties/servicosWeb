@@ -54,4 +54,8 @@ export class ConsultaProfissionaisComponent implements OnInit {
     }
   }
 
+  onEdit(idProfissional: string): void {
+    this.router.navigate(['/profissionais-edicao', idProfissional]);
+  }
+
 }

@@ -4,6 +4,7 @@ import { AutenticarUsuarioComponent } from './autenticar-usuario/autenticar-usua
 import { CriarUsuarioComponent } from './criar-usuario/criar-usuario.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CadastroProfissionaisComponent } from './cadastro-profissionais/cadastro-profissionais.component';
+import { EdicaoProfissionaisComponent } from './edicao-profissionais/edicao-profissionais.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,11 @@ export const routes: Routes = [
     {
         path: 'profissionais-cadastro',
         component: CadastroProfissionaisComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'profissionais-edicao/:id',
+        component: EdicaoProfissionaisComponent,
         canActivate: [AuthGuard]
     }
 ];

@@ -1,33 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { config } from '../../environments/environment';
 import { authHeader } from '../helpers/httpheader-helper';
 import { FormatarService } from '../helpers/formatar.service';
 
 @Component({
-  selector: 'app-cadastro-profissionais',
+  selector: 'app-edicao-profissionais',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './cadastro-profissionais.component.html',
-  styleUrl: './cadastro-profissionais.component.css'
+  templateUrl: './edicao-profissionais.component.html',
+  styleUrl: './edicao-profissionais.component.css'
 })
-export class CadastroProfissionaisComponent {
+export class EdicaoProfissionaisComponent implements OnInit {
 
   mensagemSucesso: string = '';
   mensagemErro: string = '';
 
   constructor(
     private httpClient: HttpClient,
+    private activatedRoute: ActivatedRoute,
     private formatarService: FormatarService
   ) { }
 
   form = new FormGroup({
+    idProfissional: new FormControl('', [
+      Validators.required
+    ]),
     nome: new FormControl('', [
       Validators.required, Validators.minLength(8), Validators.maxLength(150)
     ]),
@@ -46,13 +51,32 @@ export class CadastroProfissionaisComponent {
     return this.form.controls;
   }
 
+  ngOnInit(): void {
+
+    const id = this.activatedRoute.snapshot.paramMap.get('id') as string;
+
+    this.httpClient.get(config.apiUrl + '/profissionais/obter/' + id, { headers: authHeader() })
+      .subscribe({
+        next: (data: any) => {
+
+          this.form.controls['idProfissional'].setValue(data.idProfissional);
+          this.form.controls['nome'].setValue(data.nome);
+          this.form.controls['email'].setValue(data.email);
+          this.form.controls['cpf'].setValue(data.cpf);
+          this.form.controls['telefone'].setValue(data.telefone);
+        },
+        error: (e) => {
+          console.log(e.error);
+        }
+      })
+  }
+
   onSubmit(): void {
-    this.httpClient.post(config.apiUrl + '/profissionais/criar',
+    this.httpClient.put(config.apiUrl + '/profissionais/atualizar',
     this.form.value, { headers: authHeader() })
       .subscribe({
         next: (data) => {
-          this.mensagemSucesso = 'Profissional cadastrado com sucesso. Um email foi enviado para confirmar o registro.';
-          this.form.reset();
+          this.mensagemSucesso = 'Profissional atualizado com sucesso.';
         },
         error: (e) => {
           console.log(e);
@@ -69,4 +93,4 @@ export class CadastroProfissionaisComponent {
     event.target.value = this.formatarService.formatarTelefone(event.target.value);
   }
 
-} 
+}
