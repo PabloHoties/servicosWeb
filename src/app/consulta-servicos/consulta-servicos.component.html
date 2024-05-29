@@ -13,10 +13,10 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Nome do serviço</th>
+                <th>Nome do Serviço</th>
                 <th>Descrição</th>
                 <th class="text-center">Valor</th>
-                <th class="text-center">Profissional</th>
+                <th class="text-center">Profissionais</th>
                 <th class="text-center">Operações</th>
             </tr>
         </thead>
@@ -24,9 +24,9 @@
             <tr *ngFor="let s of servicos">
                 <td>{{s.nome}}</td>
                 <td>{{s.descricao}}</td>
-                <td class="text-center">{{s.valor | currency:'BRL' }}</td>
+                <td class="text-center">{{ s.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
                 <td class="text-center">
-                    <button class="btn btn-outline-primary btn-sm">
+                    <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + s.idServico">
                         Exibir
                     </button>
                 </td>
@@ -43,9 +43,40 @@
         <tfoot>
             <tr>
                 <td colspan="5">
-                    Quantidade de clientes: {{servicos.length}}
+                    Quantidade de serviços: {{servicos.length}}
                 </td>
             </tr>
         </tfoot>
     </table>
+</div>
+
+<!-- Modal -->
+<div *ngFor="let s of servicos">
+    <div class="modal fade" [id]="'modal' + s.idServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Profissionais do Serviço: {{s.nome}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="s.profissionais && s.profissionais.length > 0">
+                        <div *ngFor="let p of s.profissionais">
+                            <p><strong>Nome:</strong> {{p.nome}}</p>
+                            <p><strong>Email:</strong> {{p.email}}</p>
+                            <p><strong>CPF:</strong> {{p.cpf}}</p>
+                            <p><strong>Telefone:</strong> {{p.telefone}}</p>
+                            <hr>
+                        </div>
+                    </div>
+                    <div *ngIf="!s.profissionais || s.profissionais.length === 0">
+                        <p>Nenhum profissional associado a este serviço.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

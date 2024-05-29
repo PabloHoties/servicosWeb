@@ -14,6 +14,7 @@ import { authHeader } from '../helpers/httpheader-helper';
 export class ConsultaServicosComponent implements OnInit {
   
   servicos: any[] = [];
+  profissionais: any[] = [];
   mensagemSucesso: string = '';
   mensagemErro: string = '';
 
@@ -27,6 +28,9 @@ export class ConsultaServicosComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.servicos = data as any;
+
+           // Extrair os profissionais dos serviços
+           this.profissionais = this.servicos.flatMap(servico => servico.profissionais);
         },
         error: (e) => {
           console.log(e.error);

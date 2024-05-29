@@ -45,7 +45,7 @@ export class ConsultaProfissionaisComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.mensagemSucesso = 'Profissional excluído com sucesso.';
-            this.ngOnInit;
+            this.ngOnInit();
           },
           error: (e) => {
             this.mensagemErro = e.error as string;
